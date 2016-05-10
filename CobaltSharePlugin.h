@@ -30,7 +30,7 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
-// modify tokens here
+// modify tokens here and in ShareTokens.java (android) to modify javascript syntax
 // source of files
 #define kAPITokenSource @"source"
 #define kAPITokenPath @"path"

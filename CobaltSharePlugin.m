@@ -75,6 +75,10 @@
     
         // parse dictionary
         _filedata = [self parseDictionary:data];
+        if (_filedata.count == 0) {
+            NSLog(@"Error while parsing file datas, check your javascript.");
+            return;
+        }
         if (DEBUG_COBALT) NSLog(@"SharePlugin input parsing done: %@", _filedata.description);
 
         // share text
@@ -295,26 +299,24 @@
     BOOL retVal = false;
     NSArray *allKeys = [_filedata allKeys];
     retVal = [allKeys containsObject:key];
-    if (DEBUG_COBALT) NSLog(@"searching %@, and return %@", key, retVal ? @"true": @"false");
     return retVal;
 }
 
 // parse data from web and create _filedata
 - (NSDictionary *) parseDictionary: (NSDictionary *)data {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    NSDictionary *fileDataDictionnary = [NSDictionary dictionaryWithDictionary:[data valueForKey:@"data"]];
+    id field = nil;
+    NSArray *fieldValues = [fileDataDictionnary allValues];
+    if (fieldValues.count > 0) field = [fieldValues objectAtIndex:0];
+    NSDictionary *object = [field objectAtIndex:0];
 
-    NSDictionary *theValues = [NSDictionary dictionaryWithDictionary:[data valueForKey:@"data"]];
-    for (NSString *aKey in [theValues allKeys]) {
-        NSDictionary *aValue = [theValues valueForKey:aKey];
-        if ([aKey isEqualToString:@"data"]) {
-            for (NSString *aSubKey in [aValue allKeys]) {
-                NSString *aSubValue = [aValue objectForKey:aSubKey];
-                // get known tokens and put them into dictionary
-                for (NSString *item in _tokens) {
-                    if ([aSubKey isEqualToString:item]) {
-                        [dictionary setValue:aSubValue forKey:item];
-                    }
-                }
+    for (NSString *aKey in [object allKeys]) {
+        NSString *aSubValue = [object objectForKey:aKey];
+        // get known tokens and put them into dictionary
+        for (NSString *item in _tokens) {
+            if ([aKey isEqualToString:item]) {
+                [dictionary setValue:aSubValue forKey:item];
             }
         }
     }
@@ -323,7 +325,7 @@
 
 // show popover or view controller to share
 - (void) shareObject: (NSArray *)objectsToShare {
-    if (DEBUG_COBALT) NSLog(@"shareObject gonna share %@", objectsToShare.description);
+    //if (DEBUG_COBALT) NSLog(@"shareObject gonna share %@", objectsToShare.description);
     UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
 
     //if iPhone
