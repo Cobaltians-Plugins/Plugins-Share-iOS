@@ -90,8 +90,11 @@
         }
 
         // share contact
-        if ([type isEqualToString:kAPITokenContactType]) { // todo contact are not added
-            if ([self containsKey:kAPITokenContactName] && [self containsKey:kAPITokenContactMobile] ) {
+        if ([type isEqualToString:kAPITokenContactType]) {
+            if ([self containsKey:kAPITokenContactName] || [self containsKey:kAPITokenContactMobile] ||
+                [self containsKey:kAPITokenContactEmail] || [self containsKey:kAPITokenContactCompany] ||
+                [self containsKey:kAPITokenContactPostal] || [self containsKey:kAPITokenContactJob] ||
+                [self containsKey:kAPITokenDetail]) {
                 [self shareContact:[_filedata objectForKey:kAPITokenContactName]
                             mobile:[_filedata objectForKey:kAPITokenContactMobile]
                              email:[_filedata objectForKey:kAPITokenContactEmail]
@@ -155,7 +158,8 @@
         NSData *data = [NSData dataWithContentsOfURL:url];
         objectsToShare = @[[[UIImage alloc] initWithData:data]];
     } else if ([source isEqualToString:kAPITokenLocal]) {
-        UIImage *img = [UIImage imageNamed:path];
+        NSArray *parts = [path componentsSeparatedByString:@"/"];
+        UIImage *img = [UIImage imageNamed:[parts lastObject]];
         if (img != NULL) {
             objectsToShare = @[img];
         } else {
@@ -265,7 +269,8 @@
         objectsToShare = @[data];
     } else if ([source isEqualToString:kAPITokenLocal]) { // todo Assets management (bundle)
         // source is from internal storage
-        NSData *data = [NSData dataWithContentsOfFile:path];
+        NSArray *parts = [path componentsSeparatedByString:@"/"];
+        NSData *data = [NSData dataWithContentsOfFile:[parts lastObject]];
         if (data != NULL) {
             objectsToShare = @[data];
         } else {
