@@ -75,7 +75,7 @@
     
         // parse dictionary
         _filedata = [self parseDictionary:data];
-        if (_filedata.count == 0) {
+        if (_filedata == NULL || _filedata.count == 0) {
             NSLog(@"Error while parsing file datas, check your javascript.");
             return;
         }
@@ -311,13 +311,9 @@
 - (NSDictionary *) parseDictionary: (NSDictionary *)data {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     NSDictionary *fileDataDictionnary = [NSDictionary dictionaryWithDictionary:[data valueForKey:@"data"]];
-    id field = nil;
-    NSArray *fieldValues = [fileDataDictionnary allValues];
-    if (fieldValues.count > 0) field = [fieldValues objectAtIndex:0];
-    NSDictionary *object = [field objectAtIndex:0];
-
-    for (NSString *aKey in [object allKeys]) {
-        NSString *aSubValue = [object objectForKey:aKey];
+    if (fileDataDictionnary == NULL) return NULL;
+    for (NSString *aKey in [fileDataDictionnary allKeys]) {
+        NSString *aSubValue = [fileDataDictionnary objectForKey:aKey];
         // get known tokens and put them into dictionary
         for (NSString *item in _tokens) {
             if ([aKey isEqualToString:item]) {
