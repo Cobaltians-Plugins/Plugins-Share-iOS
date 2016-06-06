@@ -310,8 +310,9 @@
 // parse data from web and create _filedata
 - (NSDictionary *) parseDictionary: (NSDictionary *)data {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-    NSDictionary *fileDataDictionnary = [NSDictionary dictionaryWithDictionary:[data valueForKey:@"data"]];
-    if (fileDataDictionnary == NULL) return NULL;
+    if ([data valueForKey:@"data"] == false) return NULL;
+    NSDictionary *fileDataDictionnary = [data valueForKeyPath:@"data"];
+    if (fileDataDictionnary.count <= 0) return NULL;
     for (NSString *aKey in [fileDataDictionnary allKeys]) {
         NSString *aSubValue = [fileDataDictionnary objectForKey:aKey];
         // get known tokens and put them into dictionary
