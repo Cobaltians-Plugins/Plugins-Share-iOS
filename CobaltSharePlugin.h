@@ -61,5 +61,5 @@
 @interface CobaltSharePlugin: CobaltAbstractPlugin
 @property (weak, nonatomic) CobaltViewController *viewController;
 @property (strong, nonatomic) NSArray *tokens;
-@property (weak, nonatomic) NSDictionary *filedata;
+@property (strong, nonatomic) NSDictionary *filedata;
 @end
