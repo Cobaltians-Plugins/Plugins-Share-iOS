@@ -1,5 +1,5 @@
 /*
-* CobaltSlideshowPlugin.h
+* CobaltSharePlugin.h
 * Cobalt
 *
 * The MIT License (MIT)
@@ -30,42 +30,36 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
-// modify tokens here and in SlideshowPlugin.java (android) to modify javascript syntax
+// modify tokens here and in ShareTokens.java (android) to modify javascript syntax
 // source of files
-#define kJSSlideshowInit @"init"
-#define kJSSlideshowConfiguration @"slideshow:config"
+#define kAPITokenSource @"source"
+#define kAPITokenPath @"path"
+#define kAPITokenLocal @"local"
+#define kAPITokenRemote @"url"
+// types of files
+#define kAPITokenType @"type"
+#define kAPITokenImageType @"image"
+#define kAPITokenTextType @"text"
+#define kAPITokenContactType @"contact"
+#define kAPITokenDataType @"data"
+#define kAPITokenAudioType @"audio"
+#define kAPITokenVideoType @"video"
+#define kAPITokenDocumentType @"document"
+// text fields
+#define kAPITokenTextContent @"content"
+// contact fields
+#define kAPITokenContactName @"name"
+#define kAPITokenContactMobile @"mobile"
+#define kAPITokenContactEmail @"email"
+#define kAPITokenContactCompany @"company"
+#define kAPITokenContactPostal @"postal"
+#define kAPITokenContactJob @"job"
+// commons fields
+#define kAPITokenTitle @"title"
+#define kAPITokenDetail @"detail"
 
-// not used yet
-#define kJSSlideshowOnTouch @"onTouch"
-#define kJSSlideshowDeletePhoto @"deletePhoto"
-
-// native actions
-#define kJSSlideshowSetBackgroundColor @"slideshow:setBackgroundColor"
-#define kJSSlideshowUpdateTitle @"slideshow:updateTitle"
-#define kJSSlideshowOnChange @"slideshow:onChange"
-
-// init parse tokens
-#define kJSTokenData @"data"
-#define kJSTokenStartId @"startId"
-#define kJSTokenPhotos @"photos"
-#define kJSTokenPhotosId @"id"
-#define kJSTokenUrl @"url"
-#define kJSTokenUrlThumbnail @"url_thumb"
-#define kJSTokenDescription @"description"
-#define kJSTokenColor @"color"
-
-// send event
-#define kJSTokenPhotoPosition @"photo_id"
-
-// settings tokens
-#define kJSTokenSettingsBgColor @"backroundColor"
-#define kJSTokenSettingsFullscreenBgColor @"fullscreenBackgroundColor"
-
-@interface CobaltslideshowPlugin: CobaltAbstractPlugin
+@interface CobaltSharePlugin: CobaltAbstractPlugin
 @property (weak, nonatomic) CobaltViewController *viewController;
-@property (strong, nonatomic) NSArray *parseTokens;
-@property (strong, nonatomic) NSArray *eventTokens;
-@property (strong, nonatomic) NSArray *nativeTokens;
-@property (strong, nonatomic) NSArray *settingsTokens;
+@property (strong, nonatomic) NSArray *tokens;
 @property (strong, nonatomic) NSDictionary *filedata;
 @end
